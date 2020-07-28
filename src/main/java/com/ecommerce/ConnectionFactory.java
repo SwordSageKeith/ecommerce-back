@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Driver;
 
 public class ConnectionFactory {
-	public static final String URL = "jdbc:mysql://database-18.cgsyjtny2rf9.us-east-2.rds.amazonaws.com:3306/empdb";
-    public static final String USER = "admin";
-    public static final String PASS = "admin123";
+	public static final String URL = "root@localhost:3306/etsy";
+    public static final String USER = "root";
+    public static final String PASS = "password";
 
     public static Connection getConnection() {
     	try {
