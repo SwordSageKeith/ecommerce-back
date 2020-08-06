@@ -7,6 +7,16 @@ public class User {
 	private String password;
 	private int ID;
 	
+	public User(User user) {
+		email = user.email;
+		username = user.username;
+		password = user.password;
+		ID = user.ID;
+	}
+	
+	public User() {
+	}
+
 	public String getEmail() {
 		return email;
 	}

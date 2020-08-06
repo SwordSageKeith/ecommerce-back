@@ -34,7 +34,7 @@ public class UsersDAO {
 		return null;
 	}
 	
-	public Boolean CreateUser(User user) {
+	public String CreateUser(User user) {
 		Connection con = ConnectionFactory.getConnection();
 		try {
 			String sql = "INSERT INTO users (username, password, email) VALUES (?,?,?);";
@@ -47,15 +47,15 @@ public class UsersDAO {
 			con.close();
 			stmt.close();
 			if (rowsInserted > 0) {
-				return true;
+				return "User created successfully";
 			}	
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}	
-		return false;
+		return "user failed to be created";
 	}
 	
-	public Boolean DeleteUser(int ID) {
+	public String DeleteUser(int ID) {
 		Connection con = ConnectionFactory.getConnection();
 		try {
 			String sql = ("DELETE FROM users WHERE userID = " + ID);
@@ -64,11 +64,11 @@ public class UsersDAO {
 			con.close();
 			stmt.close();
 			if (result > 0) {
-				return true;
+				return "User deleted successfully";
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-		return false;
+		return "user failed to be deleted";
 	}
 }
