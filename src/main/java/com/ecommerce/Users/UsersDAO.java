@@ -11,9 +11,13 @@ import com.ecommerce.ConnectionFactory;
 
 public class UsersDAO {
 
-	//  Update user function
+	public String UpdateUser(int ID, User user) {
+		
+		
+		return "User updated succesfully";
+	}
 	
-	public User getUserByID(int ID) {
+	public User GetUserByID(int ID) {
 		User user = new User();
 		
 		Connection con = ConnectionFactory.getConnection();
@@ -23,9 +27,8 @@ public class UsersDAO {
 			if (rs.next()) {
 				user.setEmail(rs.getString("email"));
 				user.setUsername(rs.getString("username"));
-				con.close();
-				stmt.close();
-				rs.close();
+				user.setID(rs.getInt("userID"));
+				user.setPassword("lol you thought");
 				return user;
 			}
 		} catch (SQLException ex) {
@@ -34,7 +37,15 @@ public class UsersDAO {
 		return null;
 	}
 	
-	public String CreateUser(User user) {
+	/*
+	 * 0 is an unexpected failure
+	 * 1 is a success
+	 * 2 is a taken username
+	 * */
+	public int CreateUser(User user) {
+		if (CheckForUser(user.getUsername())) {
+			return 2;
+		}
 		Connection con = ConnectionFactory.getConnection();
 		try {
 			String sql = "INSERT INTO users (username, password, email) VALUES (?,?,?);";
@@ -44,15 +55,13 @@ public class UsersDAO {
 			stmt.setString(3, user.getEmail());
 			
 			int rowsInserted = stmt.executeUpdate();
-			con.close();
-			stmt.close();
 			if (rowsInserted > 0) {
-				return "User created successfully";
+				return 1;
 			}	
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}	
-		return "user failed to be created";
+		return 0;
 	}
 	
 	public String DeleteUser(int ID) {
@@ -61,8 +70,6 @@ public class UsersDAO {
 			String sql = ("DELETE FROM users WHERE userID = " + ID);
 			PreparedStatement stmt = con.prepareStatement(sql);
 			int result = stmt.executeUpdate(sql);
-			con.close();
-			stmt.close();
 			if (result > 0) {
 				return "User deleted successfully";
 			}
@@ -70,5 +77,23 @@ public class UsersDAO {
 			ex.printStackTrace();
 		}
 		return "user failed to be deleted";
+	}
+	
+	public Boolean CheckForUser(String name) {
+		Connection con = ConnectionFactory.getConnection();
+		try {
+			String sql = "SELECT EXISTS(SELECT 1 FROM users WHERE username = ?)";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, name);
+			
+			ResultSet rs = stmt.executeQuery();
+			if (rs.absolute(1)) {
+				return true;
+			}	
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}	
+		
+		return false;
 	}
 }

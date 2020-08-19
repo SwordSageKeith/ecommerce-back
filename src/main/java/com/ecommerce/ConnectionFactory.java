@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Driver;
 
 public class ConnectionFactory {
-	public static final String URL = "root@localhost:3306/etsy";
+	public static final String URL = "jdbc:mysql://root@localhost:3306/etsy";
     public static final String USER = "root";
     public static final String PASS = "password";
 
