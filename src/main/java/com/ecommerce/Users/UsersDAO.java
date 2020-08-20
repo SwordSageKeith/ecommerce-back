@@ -40,7 +40,7 @@ public class UsersDAO {
 	/*
 	 * 0 is an unexpected failure
 	 * 1 is a success
-	 * 2 is a taken username
+	 * 2 is a taken user name
 	 * */
 	public int CreateUser(User user) {
 		if (CheckForUser(user.getUsername())) {

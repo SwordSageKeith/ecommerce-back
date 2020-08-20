@@ -1,6 +1,8 @@
 package com.ecommerce.items;
 
 
+import java.util.ArrayList;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,33 +20,46 @@ import com.ecommerce.Users.UsersDAO;
 
 @RestController
 public class ItemController {
-	UsersDAO dao = new UsersDAO();
+	ItemsDAO dao = new ItemsDAO();
 
 
-	@GetMapping("user/{id}")
-	public User getUser(@PathVariable int id) {
-		User user = new User();
-		user = dao.GetUserByID(id);
-		if (user != null)
-			return user;
+	@GetMapping("item/{id}")
+	public Item getUser(@PathVariable int id) {
+		Item item = new Item();
+		item = dao.GetItemByID(id);
+		if (item != null)
+			return item;
 		else
 			return null;
 	}
 	
-	@PostMapping("user")
-	public String newUser(@RequestBody User user) {
-		if (user.getEmail() == null)
-			return "request did not contain email";
-		if (user.getUsername() == null)
-			return "request did not contain username";
-		if (user.getPassword() == null)
-			return "request did not contain password";
-		return String.valueOf(dao.CreateUser(user));
+	@GetMapping("items")
+	public ArrayList<Item> getItems() {
+		ArrayList<Item> items = new ArrayList<Item>();
+		items = dao.getRecentItems();
+		
+		return items;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping("")
-	public String test() {
-		return "hello";
+	@GetMapping("items/shop/{id}")
+	public ArrayList<Item> getShopItems(@PathVariable int id) {
+		ArrayList<Item> items = new ArrayList<Item>();
+		items = dao.getShopItems(id);
+		
+		return items;
 	}
+	
+	@PostMapping("item")
+	public String newUser(@RequestBody Item item) {
+		if (item.getName() == null) 
+			return "request did not contain name";
+		if (item.getShopID() == 0)
+			return "request did not contain a shop ID";
+		int res = dao.CreateItem(item);
+		if (res == 1)
+			return "Item created successfuly";
+		else 
+			return "Unexpected error creating item";
+	}
+	
 }

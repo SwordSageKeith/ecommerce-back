@@ -21,15 +21,13 @@ public class ShopsDAO {
 		Connection con = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shops WHERE shopID = " + ID);
 			if (rs.next()) {
 				shop.setDesc(rs.getString("desc"));
 				shop.setHidden(rs.getBoolean("hidden"));
 				shop.setName(rs.getString("name"));
 				shop.setOwner(rs.getInt("owner"));
-				con.close();
-				stmt.close();
-				rs.close();
+				shop.setShopID(rs.getInt("shopID"));
 				return shop;
 			}
 		} catch (SQLException ex) {
@@ -44,8 +42,6 @@ public class ShopsDAO {
 			String sql = "DELETE FROM shops WHERE shopID = " + ID;
 			PreparedStatement stmt = con.prepareStatement(sql);
 			int result = stmt.executeUpdate();
-			con.close();
-			stmt.close();
 			if (result > 0) {
 				return true;
 			}
@@ -66,8 +62,6 @@ public class ShopsDAO {
 			stmt.setBoolean(4, shop.getHidden());
 			
 			int inserted = stmt.executeUpdate();
-			con.close();
-			stmt.close();
 			if (inserted > 0) {
 				return true;
 			}

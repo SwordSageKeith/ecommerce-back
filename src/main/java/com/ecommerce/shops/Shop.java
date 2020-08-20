@@ -5,6 +5,7 @@ public class Shop {
 	private int owner;
 	private String desc;
 	private Boolean hidden;
+	private int shopID;
 	
 	public String getName() {
 		return name;
@@ -30,4 +31,11 @@ public class Shop {
 	public void setHidden(Boolean hidden) {
 		this.hidden = hidden;
 	}
+	public int getShopID() {
+		return shopID;
+	}
+	public void setShopID(int shopID) {
+		this.shopID = shopID;
+	}
+	
 }

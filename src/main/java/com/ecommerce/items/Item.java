@@ -5,6 +5,8 @@ public class Item {
 	private String desc;
 	private float price;
 	private Boolean hidden;
+	private int ID;
+	private int shopID;
 	
 	public String getName() {
 		return name;
@@ -30,5 +32,18 @@ public class Item {
 	public void setHidden(Boolean hidden) {
 		this.hidden = hidden;
 	}
+	public int getID() {
+		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
+	}
+	public int getShopID() {
+		return shopID;
+	}
+	public void setShopID(int shopID) {
+		this.shopID = shopID;
+	}
+	
 	
 }
