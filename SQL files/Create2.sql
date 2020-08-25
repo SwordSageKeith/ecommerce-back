@@ -17,3 +17,4 @@ ADD CONSTRAINT `user`
   REFERENCES `etsy`.`users` (`userID`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  

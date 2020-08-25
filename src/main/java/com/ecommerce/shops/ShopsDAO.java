@@ -71,4 +71,18 @@ public class ShopsDAO {
 		return false;
 	}
 	
+	public Boolean userHasShop(int id) {
+		Connection con = ConnectionFactory.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shops WHERE owner = " + id);
+			if (rs.absolute(1))
+				return true;
+			else return false;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	
 }

@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserContoller {
 	UsersDAO dao = new UsersDAO();
 
-
+	
+	
 	@GetMapping("user/{id}")
 	public User getUser(@PathVariable int id) {
 		User user = new User();
@@ -22,6 +23,9 @@ public class UserContoller {
 		else
 			return null;
 	}
+	
+	/*@PostMapping("login")
+	public String login(@RequestBody )*/
 	
 	@PostMapping("user")
 	public String newUser(@RequestBody User user) {

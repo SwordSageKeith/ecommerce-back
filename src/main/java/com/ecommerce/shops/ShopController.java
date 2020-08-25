@@ -1,6 +1,5 @@
 package com.ecommerce.shops;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +22,22 @@ public class ShopController {
 	
 	@PostMapping("shop")
 	public String createShop(@RequestBody Shop shop) {
+		if (shop.getName() == null)
+			return "request does not contain a name";
+		if (shop.getOwner() == -1)
+			return "request does not contain a owner";
+		Shop check = dao.getShopByID(shop.getOwner());
+		if (check == null)
+			return "Specified owner does not exist";
 		
-		return "aaaa";
+		if (dao.userHasShop(shop.getOwner()))
+			return "User already has a shop";
+		
+		Boolean ret = dao.createShop(shop);
+		if (ret)
+			return "Shop created successfuly";
+		else {
+			return "Shop failed to create";
+		}
 	}
 }
